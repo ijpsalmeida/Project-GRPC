@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcServer.Protos";
+
+service ServicoGeral {
+	
+
+	//utilizador
+	//Deve permitir a visualização da lista de chaves em que o utilizador já apostou anteriormente.
+	rpc PedidoApostasFeitas (ApostasFeitasRequest) returns (stream ApostasFeitasReply); 
+	//Perimitir o utilizador registar a aposta
+	rpc RegistarAposta (ApostaRequest) returns (ApostaReply);
+
+	//administrador
+	//Visualizar sorteio atual
+	rpc ApostaAtual (VisualizarApostaRequest) returns (stream VisualizarApostaReply);
+	//Arquivar sorteio atual e criar um novo 
+	rpc NovoSorteio (SorteioRequest) returns (SorteioReply);
+
+	//gestor
+	//Verificar vencedores
+	rpc Vencedor (ChaveRequest) returns (stream VencedorReply);
+}
+
+message ApostasFeitasRequest{
+	string nome_apostador  = 1;
+	string telemovel = 2;
+}
+
+message ApostasFeitasReply{
+	string ApostasFeitas = 1;
+}
+
+message ApostaRequest{
+	string nome_apostador = 1;
+	string telemovel = 2;
+    string chave = 3;
+}
+
+message ApostaReply{
+	string Resposta_Aposta = 1;
+}
+
+message VisualizarApostaRequest{
+	string Pedido_Aposta_Atual = 1;
+}
+
+message VisualizarApostaReply{
+	string nome_apostador = 1;
+	string telemovel = 2;
+	string chave = 3;
+}
+
+message SorteioRequest{
+	string Arquivar_Criar = 1;
+}
+
+message SorteioReply{
+	string Reposta_Arquivar_Criar = 1;
+}
+
+message ChaveRequest{
+	string Chave_Vencedora = 1;
+}
+
+message VencedorReply{
+	string nome_apostador = 1;
+	string telemovel = 2;
+}
